@@ -1,9 +1,10 @@
 # TODO: add REQ for kylix-libs (???)
-#	fix FHS-incompliance (/usr/themes, /usr/bin/apps/*)
-#	is it noarch (*.so???) or should be compiled???
+#	fix FHS-incompliance (/usr/themes, /usr/bin/apps/*, /usr/bin/applets/*)
+#	is it noarch (*.so???), binary x86-only (GPL???) or should be compiled???
 #	GDM/KDM login
 #
 %define subver 20030315
+# FIXME: FHS
 %define _appsdir %{_bindir}/apps
 %define _appletsdir %{_bindir}/applets
 
