@@ -11,6 +11,7 @@ License:	GPL
 Group:		X11/Applications
 # http://cvs.berlios.de/cgi-bin/viewcvs.cgi/xpde/xpde.tar.gz?tarball=1
 Source0:	xpde.tar.gz
+# Source0-md5:	ac901a963b3becff30215d80f8f042a8
 #Source0:	http://www.xpde.com/releases/%{name}-%{version}-%{subver}.tar.gz
 Source1:	startxpde
 Patch0:		%{name}-paths.patch
