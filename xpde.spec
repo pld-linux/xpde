@@ -1,22 +1,24 @@
-# TODO: add REQ for kylix-libs (???)
-#	fix FHS-incompliance (/usr/themes, /usr/bin/apps/*, /usr/bin/applets/*)
-#	is it noarch (*.so???), binary x86-only (GPL???) or should be compiled???
-#	GDM/KDM login
-#
-%define subver 20030426
-# FIXME: FHS
-%define _appsdir %{_bindir}/apps
-%define _appletsdir %{_bindir}/applets
+
+%define 	snapdate	20030506
+%define		xpdedir		%{_datadir}/xpde
 
 Summary:	XP-like desktop environment
 Summary(pl):	¦rodowisko graficzne podobne do XP
 Name:		xpde
 Version:	0.3.5
-Release:	0.1
+Release:	0.%{snapdate}.1
 License:	GPL
 Group:		X11/Applications
-Source0:	http://www.xpde.com/releases/%{name}-%{version}-%{subver}.tar.gz
+# http://cvs.berlios.de/cgi-bin/viewcvs.cgi/xpde/xpde.tar.gz?tarball=1
+Source0:	xpde.tar.gz
+#Source0:	http://www.xpde.com/releases/%{name}-%{version}-%{subver}.tar.gz
+Source1:	startxpde
+Patch0:		%{name}-paths.patch
+Patch1:		%{name}-ns.patch
 URL:		http://www.xpde.com/
+BuildRequires:	kylix3_open
+BuildRequires:	patchutils
+Requires:	kylix3_open-libs
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -36,64 +38,102 @@ kontrolek aplikacji X. Po prostu ¶rodowisko graficzne i zarz±dca
 okien.
 
 %prep
-%setup -q
+%setup -q -n xpde
+%patch0 -p1
+
+cp %{PATCH1} xpde-ns.patch
+splitdiff -a xpde-ns.patch
+P=`ls xpde-ns.patch.part*`
+for F in $P
+do
+    F2P=`cat $F | head -n 1 | awk -F "\\t" '{ gsub("^.*xpde.orig/", ""); print $1 }'`
+    patch -p1 "$F2P" $F
+done
+
+%build
+KLX=/usr/share/kylix3_open
+export KLX
+
+OUT=$RPM_BUILD_DIR/xpde/out
+mkdir -p $OUT
+rm -f $OUT/*
+LD_LIBRARY_PATH=$OUT
+export LD_LIBRARY_PATH
+
+COMP="-LUrtl:visualclx:XPRegistry:XPCommon:XPAPI:XPMenus:XPTrayIcon:XPStyle:XPColorSelect:XPShellControls:XPCommctrls"
+
+build_prj() {
+OLDPATH=`pwd`
+DIR=`dirname $1`
+PRJ=`basename $1`
+shift
+
+cd $DIR
+OPTS="-B -LE$OUT -LN$OUT -O$OUT -E$OUT -N$OUT -U$OUT:$KLX/lib $@"
+dcc $PRJ $OPTS
+cp -f *.xfm $OUT ||:
+
+cd $OLDPATH
+}
+
+build_prj xpde/src/components/registry/XPRegistry.dpk
+build_prj xpde/src/common/XPCommon.dpk
+build_prj xpde/src/components/menu/XPMenus.dpk
+build_prj xpde/src/components/style/XPStyle.dpk
+build_prj xpde/src/components/colorselect/XPColorSelect.dpk
+build_prj xpde/src/components/commctrls/XPCommctrls.dpk
+build_prj xpde/src/components/toolsapi/XPAPI.dpk
+build_prj xpde/src/components/shellcontrols/XPShellControls.dpk
+build_prj xpde/src/components/trayicon/XPTrayIcon.dpk
+
+build_prj xpde/src/core/xpde/XPde.dpr $COMP
+build_prj xpde/src/core/xpwm/XPwm.dpr $COMP
+build_prj xpde/src/applets/DateTimeProps/DateTimeProps.dpr $COMP
+build_prj xpde/src/applets/INetDial/INetDial.dpr $COMP
+build_prj xpde/src/applets/desk/desk.dpr $COMP
+build_prj xpde/src/applets/keyboard/keyboard.dpr $COMP
+build_prj xpde/src/applets/mouse/mouse.dpr $COMP
+build_prj xpde/src/applets/regional/regional.dpr $COMP
+build_prj xpde/src/applets/xpsu/xpsu.dpr $COMP
+build_prj xpde/src/applets/xpuser/xpuser.dpr $COMP
+build_prj xpde/src/apps/appexec/appexec.dpr $COMP
+build_prj xpde/src/apps/calculator/calculator.dpr $COMP
+build_prj xpde/src/apps/fileexplorer/fileexplorer.dpr $COMP
+build_prj xpde/src/apps/networkproperties/networkproperties.dpr $COMP
+build_prj xpde/src/apps/networkstatus/networkstatus.dpr $COMP
+build_prj xpde/src/apps/notepad/notepad.dpr $COMP
+build_prj xpde/src/apps/taskmanager/taskmanager.dpr $COMP
+build_prj xpde/src/components/trayicon/demo/traydemo.dpr $COMP
+build_prj xpde/src/setup/XPdesetup.dpr $COMP
+build_prj xpde/src/tools/resourceeditor/ResourceEditor.dpr $COMP
+build_prj xpde/src/tools/translator/Translator.dpr $COMP
+build_prj xpuser/xpuser.dpr $COMP
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT
+
+OUT=$RPM_BUILD_DIR/xpde/out
 
 install -d $RPM_BUILD_ROOT%{_libdir}
 install -d $RPM_BUILD_ROOT%{_bindir}
+install -d $RPM_BUILD_ROOT%{xpdedir}/{fonts,icons}
+install -d $RPM_BUILD_ROOT%{xpdedir}/defaultdesktop/Desktop
 
-#install -d $RPM_BUILD_ROOT%{_datadir}/%{name}/bin/apps
-#install -d $RPM_BUILD_ROOT%{_datadir}/%{name}/bin/applets
+cp -r xpde/themes $RPM_BUILD_ROOT%{xpdedir}
+cp -r xpde/defaultdesktop $RPM_BUILD_ROOT%{xpdedir}
 
-install -d $RPM_BUILD_ROOT%{_appsdir}
-install -d $RPM_BUILD_ROOT%{_appletsdir}
-install -d $RPM_BUILD_ROOT%{_datadir}/%{name}/doc
-install -d $RPM_BUILD_ROOT%{_datadir}/%{name}/fonts
-install -d $RPM_BUILD_ROOT%{_datadir}/%{name}/icons
-install -d $RPM_BUILD_ROOT%{_datadir}/%{name}/themes
+cp $OUT/*.so* $RPM_BUILD_ROOT%{_libdir}
+APPS=`ls $OUT/* | grep -v "\."`
+cp $APPS $RPM_BUILD_ROOT%{_bindir}
 
-# FIXME: wrong location
-install -d $RPM_BUILD_ROOT/usr/themes
-
-# FIXME: wrong location
-cp -r themes $RPM_BUILD_ROOT/usr
-cp -r defaultdesktop $RPM_BUILD_ROOT%{_datadir}/%{name}
-cp -r doc/* $RPM_BUILD_ROOT%{_datadir}/%{name}/doc
-cp *.so* $RPM_BUILD_ROOT%{_libdir}
-cp XPde $RPM_BUILD_ROOT%{_bindir}
-cp XPwm $RPM_BUILD_ROOT%{_bindir}
-
-cp DateTimeProps $RPM_BUILD_ROOT%{_appletsdir}
-cp appexec $RPM_BUILD_ROOT%{_appletsdir}
-cp networkstatus $RPM_BUILD_ROOT%{_appletsdir}
-cp networkproperties $RPM_BUILD_ROOT%{_appletsdir}
-cp xpsu $RPM_BUILD_ROOT%{_appletsdir}
-cp mouse $RPM_BUILD_ROOT%{_appletsdir}
-cp keyboard $RPM_BUILD_ROOT%{_appletsdir}
-cp regional $RPM_BUILD_ROOT%{_appletsdir}
-cp desk $RPM_BUILD_ROOT%{_appletsdir}
-
-# FIXME: wrong location
-cp taskmanager $RPM_BUILD_ROOT%{_appsdir}
-cp notepad $RPM_BUILD_ROOT%{_appsdir}
-cp calculator $RPM_BUILD_ROOT%{_appsdir}
-cp fileexplorer $RPM_BUILD_ROOT%{_appsdir}
+cp %{SOURCE1} $RPM_BUILD_ROOT%{_bindir}/startxpde
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc doc
-# FIXME: wrong location
-%attr(755,root,root) %{_appsdir}/*
-%attr(755,root,root) %{_appletsdir}/*
-%attr(755,root,root) %{_bindir}/XP*
+%doc xpde/doc/*
+%attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_libdir}/*
-
-%{_datadir}/%{name}
-# FIXME: wrong location
-/usr/themes
+%{xpdedir}
