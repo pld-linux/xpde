@@ -15,7 +15,7 @@ Version:	0.3.5
 Release:	0.1
 License:	GPL
 Group:		X11/Applications
-Source0:	http://www.xpde.com/dist2/%{name}-%{version}-%{subver}.tar.gz
+Source0:	http://www.xpde.com/releases/%{name}-%{version}-%{subver}.tar.gz
 URL:		http://www.xpde.com/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
