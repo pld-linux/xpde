@@ -1,21 +1,31 @@
 # TODO: move kylix runtime into separate rpm (in kylix.spec)
 %define subver 20030315
 Summary:	XP-like desktop environment
+Summary(pl):	¦rodowisko graficzne podobne do XP
 Name:		xpde
 Version:	0.3.0
 Release:	1
 License:	GPL
 Group:		X11/Applications
-Source0:	%{name}-%{version}-%{subver}.tar.gz
-URL:		http://www.xpde.com
+Source0:	http://www.xpde.com/dist2/%{name}-%{version}-%{subver}.tar.gz
+URL:		http://www.xpde.com/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-It's a desktop environment(XPde) and a window manager(XPwm) for Linux.
-It tries to recreate the Windows XP interface to-the-pixel point.
-Nothing more, no clipboard compatibility between Gtk and Qt applications,
-no emulation of Windows applications, no unification on the widgets of
-X applications, just a desktop environment and a window manager. 
+It's a desktop environment (XPde) and a window manager (XPwm) for
+Linux. It tries to recreate the Windows XP interface to-the-pixel
+point. Nothing more, no clipboard compatibility between Gtk and Qt
+applications, no emulation of Windows applications, no unification on
+the widgets of X applications, just a desktop environment and a window
+manager.
+
+%description -l pl
+Jest to ¶rodowisko graficzne (XPde) oraz zarz±dca okien (XPwm) dla
+Linuksa. Próbuje on odtworzyæ interfejs Windows XP na poziomie
+pokseli. Nie zawiera nic wiêcej: brak zgodno¶ci schowka pomiêdzy
+aplikacjami Gtk i Qt, nie emuluje aplikacji Windows, nie unifikuje
+kontrolek aplikacji X. Po prostu ¶rodowisko graficzne i zarz±dca
+okien.
 
 %prep
 %setup -q -n %{name}-%{version}
@@ -76,8 +86,6 @@ cp taskmanager $RPM_BUILD_ROOT%{_bindir}/apps
 cp notepad $RPM_BUILD_ROOT%{_bindir}/apps
 cp calculator $RPM_BUILD_ROOT%{_bindir}/apps
 cp fileexplorer $RPM_BUILD_ROOT%{_bindir}/apps
-
-
 
 %clean
 rm -rf $RPM_BUILD_ROOT
