@@ -3,7 +3,7 @@
 #	is it noarch (*.so???), binary x86-only (GPL???) or should be compiled???
 #	GDM/KDM login
 #
-%define subver 20030315
+%define subver 20030426
 # FIXME: FHS
 %define _appsdir %{_bindir}/apps
 %define _appletsdir %{_bindir}/applets
@@ -11,8 +11,8 @@
 Summary:	XP-like desktop environment
 Summary(pl):	¦rodowisko graficzne podobne do XP
 Name:		xpde
-Version:	0.3.0
-Release:	1
+Version:	0.3.5
+Release:	0.1
 License:	GPL
 Group:		X11/Applications
 Source0:	http://www.xpde.com/dist2/%{name}-%{version}-%{subver}.tar.gz
