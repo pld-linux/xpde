@@ -1,4 +1,7 @@
 # TODO: move kylix runtime into separate rpm (in kylix.spec)
+#	fix FHS-incompliance (/usr/themes, /usr/bin/apps/*)
+#	is it noarch (*.so???) or should be compiled???
+#
 %define subver 20030315
 Summary:	XP-like desktop environment
 Summary(pl):	¦rodowisko graficzne podobne do XP
@@ -22,15 +25,13 @@ manager.
 %description -l pl
 Jest to ¶rodowisko graficzne (XPde) oraz zarz±dca okien (XPwm) dla
 Linuksa. Próbuje on odtworzyæ interfejs Windows XP na poziomie
-pokseli. Nie zawiera nic wiêcej: brak zgodno¶ci schowka pomiêdzy
+pikseli. Nie zawiera nic wiêcej: brak zgodno¶ci schowka pomiêdzy
 aplikacjami Gtk i Qt, nie emuluje aplikacji Windows, nie unifikuje
 kontrolek aplikacji X. Po prostu ¶rodowisko graficzne i zarz±dca
 okien.
 
 %prep
-%setup -q -n %{name}-%{version}
-
-%build
+%setup -q
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -49,6 +50,7 @@ install -d $RPM_BUILD_ROOT%{_datadir}/%{name}/fonts
 install -d $RPM_BUILD_ROOT%{_datadir}/%{name}/icons
 install -d $RPM_BUILD_ROOT%{_datadir}/%{name}/themes
 
+# FIXME: wrong location
 install -d $RPM_BUILD_ROOT/usr/themes
 
 #mkdir "/opt/xpde"
@@ -65,6 +67,7 @@ install -d $RPM_BUILD_ROOT/usr/themes
 #
 #mkdir "/opt/xpde/themes"
 
+# FIXME: wrong location
 cp -r themes $RPM_BUILD_ROOT/usr
 cp -r defaultdesktop $RPM_BUILD_ROOT%{_datadir}/%{name}
 cp -r doc/* $RPM_BUILD_ROOT%{_datadir}/%{name}/doc
@@ -82,6 +85,7 @@ cp keyboard $RPM_BUILD_ROOT%{_datadir}/%{name}/applets
 cp regional $RPM_BUILD_ROOT%{_datadir}/%{name}/applets
 cp desk $RPM_BUILD_ROOT%{_datadir}/%{name}/applets
 
+# FIXME: wrong location
 cp taskmanager $RPM_BUILD_ROOT%{_bindir}/apps
 cp notepad $RPM_BUILD_ROOT%{_bindir}/apps
 cp calculator $RPM_BUILD_ROOT%{_bindir}/apps
@@ -93,9 +97,11 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc doc
+# FIXME: wrong location
 %attr(755,root,root) %{_bindir}/apps/*
 %attr(755,root,root) %{_bindir}/XP*
 %attr(755,root,root) %{_libdir}/*
 
 %{_datadir}/%{name}
+# FIXME: wrong location
 /usr/themes
