@@ -1,0 +1,11 @@
+#!/bin/sh
+
+DEFCFGDIR=/usr/share/xpde/defaultdesktop
+
+if [ ! -d $HOME/.xpde ]; then
+    mkdir $HOME/.xpde
+    cp -a $DEFCFGDIR/* $HOME/.xpde
+fi
+
+/usr/bin/XPde -ns full &
+/usr/bin/XPwm -ns
