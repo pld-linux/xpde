@@ -1,17 +1,18 @@
 
-%define 	snapdate	20030506
+#%define 	snapdate	20030506
 %define		xpdedir		%{_datadir}/xpde
 
 Summary:	XP-like desktop environment
 Summary(pl):	¦rodowisko graficzne podobne do XP
 Name:		xpde
-Version:	0.3.5
-Release:	0.%{snapdate}.1
+Version:	0.5.0
+Release:	1
+#Release:	0.%{snapdate}.1
 License:	GPL
 Group:		X11/Applications
 # http://cvs.berlios.de/cgi-bin/viewcvs.cgi/xpde/xpde.tar.gz?tarball=1
-Source0:	xpde.tar.gz
-# Source0-md5:	ac901a963b3becff30215d80f8f042a8
+Source0:	http://www.xpde.com/releases/%{name}-%{version}.tar.gz
+# Source0-md5:	b79517f4ed86bbc6e43bf1d8d1f8188d
 #Source0:	http://www.xpde.com/releases/%{name}-%{version}-%{subver}.tar.gz
 Source1:	startxpde
 Patch0:		%{name}-paths.patch
