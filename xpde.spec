@@ -47,8 +47,8 @@ splitdiff -a xpde-ns.patch
 P=`ls xpde-ns.patch.part*`
 for F in $P
 do
-    F2P=`cat $F | head -n 1 | awk -F "\\t" '{ gsub("^.*xpde.orig/", ""); print $1 }'`
-    patch -p1 "$F2P" $F
+	F2P=`cat $F | head -n 1 | awk -F "\\t" '{ gsub("^.*xpde.orig/", ""); print $1 }'`
+	patch -p1 "$F2P" $F
 done
 
 %build
