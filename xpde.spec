@@ -1,8 +1,12 @@
-# TODO: move kylix runtime into separate rpm (in kylix.spec)
+# TODO: add REQ for kylix-libs (???)
 #	fix FHS-incompliance (/usr/themes, /usr/bin/apps/*)
 #	is it noarch (*.so???) or should be compiled???
+#	GDM/KDM login
 #
 %define subver 20030315
+%define _appsdir %{_bindir}/apps
+%define _appletsdir %{_bindir}/applets
+
 Summary:	XP-like desktop environment
 Summary(pl):	¦rodowisko graficzne podobne do XP
 Name:		xpde
@@ -43,8 +47,8 @@ install -d $RPM_BUILD_ROOT%{_bindir}
 #install -d $RPM_BUILD_ROOT%{_datadir}/%{name}/bin/apps
 #install -d $RPM_BUILD_ROOT%{_datadir}/%{name}/bin/applets
 
-install -d $RPM_BUILD_ROOT%{_bindir}/apps
-install -d $RPM_BUILD_ROOT%{_datadir}/%{name}/applets
+install -d $RPM_BUILD_ROOT%{_appsdir}
+install -d $RPM_BUILD_ROOT%{_appletsdir}
 install -d $RPM_BUILD_ROOT%{_datadir}/%{name}/doc
 install -d $RPM_BUILD_ROOT%{_datadir}/%{name}/fonts
 install -d $RPM_BUILD_ROOT%{_datadir}/%{name}/icons
@@ -52,20 +56,6 @@ install -d $RPM_BUILD_ROOT%{_datadir}/%{name}/themes
 
 # FIXME: wrong location
 install -d $RPM_BUILD_ROOT/usr/themes
-
-#mkdir "/opt/xpde"
-#mkdir "/opt/xpde/bin"
-#mkdir "/opt/xpde/bin/apps"
-#mkdir "/opt/xpde/bin/applets"
-#
-#mkdir "/opt/xpde/share"
-#mkdir "/opt/xpde/share/apps"
-#mkdir "/opt/xpde/share/applets"
-#mkdir "/opt/xpde/share/doc"
-#mkdir "/opt/xpde/share/fonts"
-#mkdir "/opt/xpde/share/icons"
-#
-#mkdir "/opt/xpde/themes"
 
 # FIXME: wrong location
 cp -r themes $RPM_BUILD_ROOT/usr
@@ -75,21 +65,21 @@ cp *.so* $RPM_BUILD_ROOT%{_libdir}
 cp XPde $RPM_BUILD_ROOT%{_bindir}
 cp XPwm $RPM_BUILD_ROOT%{_bindir}
 
-cp DateTimeProps $RPM_BUILD_ROOT%{_datadir}/%{name}/applets
-cp appexec $RPM_BUILD_ROOT%{_datadir}/%{name}/applets
-cp networkstatus $RPM_BUILD_ROOT%{_datadir}/%{name}/applets
-cp networkproperties $RPM_BUILD_ROOT%{_datadir}/%{name}/applets
-cp xpsu $RPM_BUILD_ROOT%{_datadir}/%{name}/applets
-cp mouse $RPM_BUILD_ROOT%{_datadir}/%{name}/applets
-cp keyboard $RPM_BUILD_ROOT%{_datadir}/%{name}/applets
-cp regional $RPM_BUILD_ROOT%{_datadir}/%{name}/applets
-cp desk $RPM_BUILD_ROOT%{_datadir}/%{name}/applets
+cp DateTimeProps $RPM_BUILD_ROOT%{_appletsdir}
+cp appexec $RPM_BUILD_ROOT%{_appletsdir}
+cp networkstatus $RPM_BUILD_ROOT%{_appletsdir}
+cp networkproperties $RPM_BUILD_ROOT%{_appletsdir}
+cp xpsu $RPM_BUILD_ROOT%{_appletsdir}
+cp mouse $RPM_BUILD_ROOT%{_appletsdir}
+cp keyboard $RPM_BUILD_ROOT%{_appletsdir}
+cp regional $RPM_BUILD_ROOT%{_appletsdir}
+cp desk $RPM_BUILD_ROOT%{_appletsdir}
 
 # FIXME: wrong location
-cp taskmanager $RPM_BUILD_ROOT%{_bindir}/apps
-cp notepad $RPM_BUILD_ROOT%{_bindir}/apps
-cp calculator $RPM_BUILD_ROOT%{_bindir}/apps
-cp fileexplorer $RPM_BUILD_ROOT%{_bindir}/apps
+cp taskmanager $RPM_BUILD_ROOT%{_appsdir}
+cp notepad $RPM_BUILD_ROOT%{_appsdir}
+cp calculator $RPM_BUILD_ROOT%{_appsdir}
+cp fileexplorer $RPM_BUILD_ROOT%{_appsdir}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -98,7 +88,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc doc
 # FIXME: wrong location
-%attr(755,root,root) %{_bindir}/apps/*
+%attr(755,root,root) %{_appsdir}/*
+%attr(755,root,root) %{_appletsdir}/*
 %attr(755,root,root) %{_bindir}/XP*
 %attr(755,root,root) %{_libdir}/*
 
