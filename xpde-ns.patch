@@ -1,0 +1,162 @@
+diff -Nur xpde.orig/xpde/defaultdesktop/Control Panel/Date and Time.lnk xpde.chng/xpde/defaultdesktop/Control Panel/Date and Time.lnk
+--- xpde.orig/xpde/defaultdesktop/Control Panel/Date and Time.lnk	Sun Mar 16 17:02:40 2003
++++ xpde.chng/xpde/defaultdesktop/Control Panel/Date and Time.lnk	Tue May  6 17:54:14 2003
+@@ -2,6 +2,6 @@
+ Icon=1day.png
+ Caption=Date and Time
+ Comments=Set the date, time, and time zone for your computer.
+-Command=%APPLETS%xpsu root "%APPS%stub.sh %APPLETS%DateTimeProps"
++Command=%APPLETS%xpsu -ns root "%APPLETS%DateTimeProps -ns"
+ Startin=
+ 
+diff -Nur xpde.orig/xpde/defaultdesktop/Control Panel/Display.lnk xpde.chng/xpde/defaultdesktop/Control Panel/Display.lnk
+--- xpde.orig/xpde/defaultdesktop/Control Panel/Display.lnk	Sun Mar 16 17:02:40 2003
++++ xpde.chng/xpde/defaultdesktop/Control Panel/Display.lnk	Tue May  6 17:59:39 2003
+@@ -2,6 +2,6 @@
+ Caption=Display
+ Icon=kscreensaver.png
+ Comments=Change the appearance of your desktop, such as the background, screen saver, colors, font sizes, and screen resolution.
+-Command=%APPLETS%desk
++Command=%APPLETS%desk -ns
+ Startin=
+ 
+diff -Nur xpde.orig/xpde/defaultdesktop/Control Panel/Keyboard.lnk xpde.chng/xpde/defaultdesktop/Control Panel/Keyboard.lnk
+--- xpde.orig/xpde/defaultdesktop/Control Panel/Keyboard.lnk	Sun Mar 16 17:02:40 2003
++++ xpde.chng/xpde/defaultdesktop/Control Panel/Keyboard.lnk	Tue May  6 17:59:44 2003
+@@ -2,6 +2,6 @@
+ Caption=Keyboard
+ Icon=key_enter.png
+ Comments=Customize your keyboard settings, such as the cursor blink rate and the character repeat rate.
+-Command=%APPLETS%keyboard
++Command=%APPLETS%keyboard -ns
+ Startin=
+ 
+diff -Nur xpde.orig/xpde/defaultdesktop/Control Panel/Mouse.lnk xpde.chng/xpde/defaultdesktop/Control Panel/Mouse.lnk
+--- xpde.orig/xpde/defaultdesktop/Control Panel/Mouse.lnk	Wed Mar  5 18:02:37 2003
++++ xpde.chng/xpde/defaultdesktop/Control Panel/Mouse.lnk	Tue May  6 17:59:48 2003
+@@ -2,6 +2,6 @@
+ Caption=Mouse
+ Icon=mouse.png
+ Comments=Customize your mouse settings, such as the button configuration, double-click speed, mouse pointers, and motion speed.
+-Command=%APPLETS%mouse
++Command=%APPLETS%mouse -ns
+ Startin=
+ 
+diff -Nur xpde.orig/xpde/defaultdesktop/Control Panel/Network Connections.lnk xpde.chng/xpde/defaultdesktop/Control Panel/Network Connections.lnk
+--- xpde.orig/xpde/defaultdesktop/Control Panel/Network Connections.lnk	Sun Mar 16 17:02:40 2003
++++ xpde.chng/xpde/defaultdesktop/Control Panel/Network Connections.lnk	Tue May  6 17:59:55 2003
+@@ -2,6 +2,6 @@
+ Caption=Network Connections
+ Icon=package_network.png
+ Comments=Connects to other computers, networks, and the Internet.
+-Command=%APPLETS%networkstatus -i eth0
++Command=%APPLETS%networkstatus -ns -i eth0
+ Startin=
+ 
+diff -Nur xpde.orig/xpde/defaultdesktop/Start Menu/Programs/Accessories/Calculator.lnk xpde.chng/xpde/defaultdesktop/Start Menu/Programs/Accessories/Calculator.lnk
+--- xpde.orig/xpde/defaultdesktop/Start Menu/Programs/Accessories/Calculator.lnk	Tue Mar  4 20:34:47 2003
++++ xpde.chng/xpde/defaultdesktop/Start Menu/Programs/Accessories/Calculator.lnk	Tue May  6 18:00:03 2003
+@@ -1,3 +1,3 @@
+ [Shortcut]
+-Command=%APPS%calculator
++Command=%APPS%calculator -ns
+ 
+diff -Nur xpde.orig/xpde/defaultdesktop/Start Menu/Programs/Accessories/File Explorer.lnk xpde.chng/xpde/defaultdesktop/Start Menu/Programs/Accessories/File Explorer.lnk
+--- xpde.orig/xpde/defaultdesktop/Start Menu/Programs/Accessories/File Explorer.lnk	Tue Feb 25 19:12:42 2003
++++ xpde.chng/xpde/defaultdesktop/Start Menu/Programs/Accessories/File Explorer.lnk	Tue May  6 18:00:08 2003
+@@ -1,3 +1,3 @@
+ [Shortcut]
+-Command=%APPS%fileexplorer
++Command=%APPS%fileexplorer -ns
+ 
+diff -Nur xpde.orig/xpde/defaultdesktop/Start Menu/Programs/Accessories/Notepad.lnk xpde.chng/xpde/defaultdesktop/Start Menu/Programs/Accessories/Notepad.lnk
+--- xpde.orig/xpde/defaultdesktop/Start Menu/Programs/Accessories/Notepad.lnk	Sat Feb  8 16:58:43 2003
++++ xpde.chng/xpde/defaultdesktop/Start Menu/Programs/Accessories/Notepad.lnk	Tue May  6 18:00:14 2003
+@@ -1,3 +1,3 @@
+ [Shortcut]
+-Command=%APPS%notepad
++Command=%APPS%notepad -ns
+ 
+diff -Nur xpde.orig/xpde/src/core/xpde/uDesktopMain.pas xpde.chng/xpde/src/core/xpde/uDesktopMain.pas
+--- xpde.orig/xpde/src/core/xpde/uDesktopMain.pas	Sat Apr 12 10:42:31 2003
++++ xpde.chng/xpde/src/core/xpde/uDesktopMain.pas	Tue May  6 17:58:18 2003
+@@ -425,7 +425,7 @@
+ 
+ procedure TXPDesktop.customize;
+ begin
+-    XPAPI.ShellExecute(XPAPI.getSysInfo(siAppletsDir)+'desk',false);
++    XPAPI.ShellExecute(XPAPI.getSysInfo(siAppletsDir)+'desk -ns',false);
+     {
+     if not assigned(customizeproc) then begin
+         loadpackage(XPAPI.getSysInfo(siAppDir)+'/bpldesk.so');
+diff -Nur xpde.orig/xpde/src/core/xpde/uXPAPI_imp.pas xpde.chng/xpde/src/core/xpde/uXPAPI_imp.pas
+--- xpde.orig/xpde/src/core/xpde/uXPAPI_imp.pas	Tue May  6 17:49:40 2003
++++ xpde.chng/xpde/src/core/xpde/uXPAPI_imp.pas	Tue May  6 17:59:11 2003
+@@ -323,7 +323,7 @@
+     document:=replacesystempaths(adocument);
+ 
+     if directoryexists(document) then begin
+-        XPAPI.ShellExecute(XPAPI.getSysInfo(siAppsDir)+'fileexplorer -f "'+adocument+'"',false);
++        XPAPI.ShellExecute(XPAPI.getSysInfo(siAppsDir)+'fileexplorer -ns -f "'+adocument+'"',false);
+     end
+     else begin
+         libc.stat(PChar(document),sb);
+@@ -354,7 +354,7 @@
+                         end;
+             end
+             else if ext='' then begin
+-                XPAPI.ShellExecute(XPAPI.getSysInfo(siAppsDir)+'fileexplorer -f '+adocument,false);
++                XPAPI.ShellExecute(XPAPI.getSysInfo(siAppsDir)+'fileexplorer -ns -f '+adocument,false);
+             end
+             else begin
+                 executable:=getExecutable(ext);
+diff -Nur xpde.orig/xpde/src/core/xpwm/uTaskBar.pas xpde.chng/xpde/src/core/xpwm/uTaskBar.pas
+--- xpde.orig/xpde/src/core/xpwm/uTaskBar.pas	Sat May  3 18:49:27 2003
++++ xpde.chng/xpde/src/core/xpwm/uTaskBar.pas	Tue May  6 17:58:07 2003
+@@ -351,7 +351,7 @@
+ 
+ procedure TTaskBar.Run1Click(Sender: TObject);
+ begin
+-    XPAPI.ShellExecute(XPAPI.getSysInfo(siAppletsDir)+'appexec',false);
++    XPAPI.ShellExecute(XPAPI.getSysInfo(siAppletsDir)+'appexec -ns',false);
+ end;
+ 
+ procedure TTaskBar.OnMenuItemClick(Sender: TObject);
+@@ -474,7 +474,7 @@
+ 
+ procedure TTaskBar.TaskManager1Click(Sender: TObject);
+ begin
+-    XPAPI.ShellExecute(XPAPI.getsysinfo(siAppsdir)+'taskmanager',false);
++    XPAPI.ShellExecute(XPAPI.getsysinfo(siAppsdir)+'taskmanager -ns',false);
+ end;
+ 
+ 
+@@ -598,7 +598,7 @@
+ 
+ procedure TTaskBar.imNetDblClick(Sender: TObject);
+ begin
+-    XPAPI.ShellExecute(XPAPI.getsysinfo(siAppletsDir)+'networkstatus -i eth0',false);
++    XPAPI.ShellExecute(XPAPI.getsysinfo(siAppletsDir)+'networkstatus -ns -i eth0',false);
+ end;
+ 
+ procedure TTaskBar.TurnOffComputer1Click(Sender: TObject);
+@@ -615,17 +615,16 @@
+ begin
+     appletsdir:=XPAPI.getsysinfo(siAppletsDir);
+ 
+-    stub:=XPAPI.getsysinfo(siAppDir)+'stub.sh';
+     applet:=appletsdir+'DateTimeProps';
+ 
+-    command:=format('%s/xpsu root "%s %s"',[appletsdir, stub, applet]);
++    command:=format('%s/xpsu -ns root "%s -ns"',[appletsdir, applet]);
+ 
+     XPAPI.ShellExecute(command,false);
+ end;
+ 
+ procedure TTaskBar.Settings1Click(Sender: TObject);
+ begin
+-    XPAPI.ShellExecute(XPAPI.getsysinfo(siAppsdir)+'fileexplorer -f %CONTROLPANEL%',false);
++    XPAPI.ShellExecute(XPAPI.getsysinfo(siAppsdir)+'fileexplorer -ns -f %CONTROLPANEL%',false);
+ end;
+ 
+ procedure TTaskBar.IPCNotification(Sender: TObject; msg, data: integer);
