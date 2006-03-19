@@ -5,16 +5,14 @@
 Summary:	XP-like desktop environment
 Summary(pl):	¦rodowisko graficzne podobne do XP
 Name:		xpde
-Version:	0.3.5
-Release:	0.%{snapdate}.1
+Version:	0.5.1
+Release:	0.1
 License:	GPL
 Group:		X11/Applications
-# http://cvs.berlios.de/cgi-bin/viewcvs.cgi/xpde/xpde.tar.gz?tarball=1
-Source0:	xpde.tar.gz
-# Source0-md5:	ac901a963b3becff30215d80f8f042a8
-#Source0:	http://www.xpde.com/releases/%{name}-%{version}-%{subver}.tar.gz
+Source0:	http://www.xpde.com/releases/%{name}-%{version}.tar.gz
+# Source0-md5:	d75bbfa3949f9de30a525d6c785e6a53
 Source1:	startxpde
-Patch0:		%{name}-paths.patch
+#Patch0:		%{name}-paths.patch
 Patch1:		%{name}-ns.patch
 URL:		http://www.xpde.com/
 BuildRequires:	kylix3_open
@@ -40,16 +38,16 @@ okien.
 
 %prep
 %setup -q -n xpde
-%patch0 -p1
-
-cp %{PATCH1} xpde-ns.patch
-splitdiff -a xpde-ns.patch
-P=`ls xpde-ns.patch.part*`
-for F in $P
-do
-	F2P=`cat $F | head -n 1 | awk -F "\\t" '{ gsub("^.*xpde.orig/", ""); print $1 }'`
-	patch -p1 "$F2P" $F
-done
+#%patch0 -p1
+#%patch1 -p1
+#cp %{PATCH1} xpde-ns.patch
+#splitdiff -a xpde-ns.patch
+#P=`ls xpde-ns.patch.part*`
+#for F in $P
+#do
+#	F2P=`cat $F | head -n 1 | awk -F "\\t" '{ gsub("^.*xpde.orig/", ""); print $1 }'`
+#	patch -p1 "$F2P" $F
+#done
 
 %build
 KLX=/usr/share/kylix3_open
@@ -77,7 +75,7 @@ cp -f *.xfm $OUT ||:
 cd $OLDPATH
 }
 
-build_prj xpde/src/components/registry/XPRegistry.dpk
+build_prj src/components/XPRegistry/XPRegistry.dpk
 build_prj xpde/src/common/XPCommon.dpk
 build_prj xpde/src/components/menu/XPMenus.dpk
 build_prj xpde/src/components/style/XPStyle.dpk
