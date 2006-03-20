@@ -15,7 +15,7 @@ Source1:	startxpde
 #Patch0:		%{name}-paths.patch
 Patch1:		%{name}-ns.patch
 URL:		http://www.xpde.com/
-BuildRequires:	kylix3_open
+BuildRequires:	kylix >= 3
 BuildRequires:	patchutils
 Requires:	kylix3_open-libs
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
