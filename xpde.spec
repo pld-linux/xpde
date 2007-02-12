@@ -3,7 +3,7 @@
 %define		xpdedir		%{_datadir}/xpde
 
 Summary:	XP-like desktop environment
-Summary(pl.UTF-8):   Środowisko graficzne podobne do XP
+Summary(pl.UTF-8):	Środowisko graficzne podobne do XP
 Name:		xpde
 Version:	0.5.1
 Release:	0.1
