@@ -3,7 +3,7 @@
 %define		xpdedir		%{_datadir}/xpde
 
 Summary:	XP-like desktop environment
-Summary(pl):	¦rodowisko graficzne podobne do XP
+Summary(pl.UTF-8):   Åšrodowisko graficzne podobne do XP
 Name:		xpde
 Version:	0.5.1
 Release:	0.1
@@ -28,12 +28,12 @@ applications, no emulation of Windows applications, no unification on
 the widgets of X applications, just a desktop environment and a window
 manager.
 
-%description -l pl
-Jest to ¶rodowisko graficzne (XPde) oraz zarz±dca okien (XPwm) dla
-Linuksa. Próbuje on odtworzyæ interfejs Windows XP na poziomie
-pikseli. Nie zawiera nic wiêcej: brak zgodno¶ci schowka pomiêdzy
+%description -l pl.UTF-8
+Jest to Å›rodowisko graficzne (XPde) oraz zarzÄ…dca okien (XPwm) dla
+Linuksa. PrÃ³buje on odtworzyÄ‡ interfejs Windows XP na poziomie
+pikseli. Nie zawiera nic wiÄ™cej: brak zgodnoÅ›ci schowka pomiÄ™dzy
 aplikacjami Gtk i Qt, nie emuluje aplikacji Windows, nie unifikuje
-kontrolek aplikacji X. Po prostu ¶rodowisko graficzne i zarz±dca
+kontrolek aplikacji X. Po prostu Å›rodowisko graficzne i zarzÄ…dca
 okien.
 
 %prep
